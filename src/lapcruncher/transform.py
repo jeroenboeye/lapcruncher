@@ -13,7 +13,7 @@ def _calculate_distance_between_points(row: dict[str, float]) -> float:
     return geodesic(coords_previous, coords_current).kilometers
 
 
-def calculate_distance_km(df: pd.DataFrame) -> pd.Series[float]:
+def calculate_distance_km(df: pd.DataFrame) -> pd.Series:
     coord_df = df[["latitude", "longitude"]].copy()
     coord_df["prev_latitude"] = coord_df["latitude"].shift(
         1, fill_value=coord_df["latitude"].iloc[0]
