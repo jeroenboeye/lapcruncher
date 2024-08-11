@@ -7,9 +7,10 @@
 #   all-features: false
 #   with-sources: false
 #   generate-hashes: false
-#   universal: false
 
 -e file:.
+attrs==24.2.0
+    # via lapcruncher
 contourpy==1.2.1
     # via matplotlib
 cycler==0.12.1
@@ -22,8 +23,6 @@ geopy==2.4.1
     # via lapcruncher
 gpxpy==1.6.2
     # via lapcruncher
-importlib-resources==6.4.0
-    # via matplotlib
 kiwisolver==1.4.5
     # via matplotlib
 matplotlib==3.9.1.post1
@@ -55,5 +54,3 @@ six==1.16.0
     # via python-dateutil
 tzdata==2024.1
     # via pandas
-zipp==3.20.0
-    # via importlib-resources

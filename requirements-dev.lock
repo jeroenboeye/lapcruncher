@@ -7,9 +7,10 @@
 #   all-features: false
 #   with-sources: false
 #   generate-hashes: false
-#   universal: false
 
 -e file:.
+attrs==24.2.0
+    # via lapcruncher
 contourpy==1.2.1
     # via matplotlib
 cycler==0.12.1
@@ -22,13 +23,15 @@ geopy==2.4.1
     # via lapcruncher
 gpxpy==1.6.2
     # via lapcruncher
-importlib-resources==6.4.0
-    # via matplotlib
 kiwisolver==1.4.5
     # via matplotlib
+markdown-it-py==3.0.0
+    # via rich
 matplotlib==3.9.1.post1
     # via lapcruncher
     # via seaborn
+mdurl==0.1.2
+    # via markdown-it-py
 numpy==2.0.1
     # via contourpy
     # via lapcruncher
@@ -42,6 +45,8 @@ pandas==2.2.2
     # via seaborn
 pillow==10.4.0
     # via matplotlib
+pygments==2.18.0
+    # via rich
 pyparsing==3.1.2
     # via matplotlib
 python-dateutil==2.9.0.post0
@@ -49,11 +54,10 @@ python-dateutil==2.9.0.post0
     # via pandas
 pytz==2024.1
     # via pandas
+rich==13.7.1
 seaborn==0.13.2
     # via lapcruncher
 six==1.16.0
     # via python-dateutil
 tzdata==2024.1
     # via pandas
-zipp==3.20.0
-    # via importlib-resources
