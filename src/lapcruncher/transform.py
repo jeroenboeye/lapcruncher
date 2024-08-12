@@ -26,6 +26,7 @@ def calculate_distance_km(df: pd.DataFrame) -> pd.Series:
 
 
 def enrich_pre_lap_data(df: pd.DataFrame) -> pd.DataFrame:
+    df = df.copy()
     df["distance_km"] = calculate_distance_km(df)
     df["power_4th_power"] = df.rolling(30).power.mean() ** 4
     df["power_above_1000W"] = df.power >= 1000
@@ -74,10 +75,11 @@ def enrich_laps(df: pd.DataFrame) -> pd.DataFrame:
                 "sum",
             ),
             seconds_power_below_800W_above_600W=("power_below_800W_above_600W", "sum"),
+            temperature=("temperature", "mean"),
         )
         .assign(
             duration=lambda x: x["time_end"] - x["time_start"],
-            normalized_power=lambda x: (x["power_4th_power_mean"] ** (1 / 4)).round(1),
+            power_normalized=lambda x: (x["power_4th_power_mean"] ** (1 / 4)).round(1),
             hr_mean=lambda x: x["hr_mean"].round(1),
             power_mean=lambda x: x["power_mean"].round(1),
             power_std=lambda x: x["power_std"].round(1),
@@ -85,6 +87,7 @@ def enrich_laps(df: pd.DataFrame) -> pd.DataFrame:
             speed_mean=lambda x: (
                 x["lap_distance_km"] / (x["duration"].dt.total_seconds() / 3600)
             ).round(1),
+            temperature=lambda x: x["temperature"].round(1),
         )
         .drop(
             columns=[

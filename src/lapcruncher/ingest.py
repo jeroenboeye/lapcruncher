@@ -17,6 +17,7 @@ def gpx_parser(gpx: gpxpy.mod_gpx.GPX) -> Iterator[dict]:
                     "time": point.time,
                     "hr": np.nan,
                     "power": np.nan,
+                    "temperature": np.nan,
                 }
                 for extension in point.extensions:
                     if (
@@ -26,6 +27,8 @@ def gpx_parser(gpx: gpxpy.mod_gpx.GPX) -> Iterator[dict]:
                         for child in extension:
                             if child.tag[-2:] == "hr":
                                 pointdict["hr"] = int(child.text)
+                            elif child.tag[-5:] == "atemp":
+                                pointdict["temperature"] = int(child.text)
                     elif extension.tag == "power":
                         pointdict["power"] = int(extension.text)
                 yield pointdict
