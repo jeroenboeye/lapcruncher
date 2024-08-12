@@ -78,7 +78,7 @@ def enrich_laps(df: pd.DataFrame) -> pd.DataFrame:
         )
         .assign(
             duration=lambda x: x["time_end"] - x["time_start"],
-            normalized_power=lambda x: (x["power_4th_power_mean"] ** (1 / 4)).round(1),
+            power_normalized=lambda x: (x["power_4th_power_mean"] ** (1 / 4)).round(1),
             hr_mean=lambda x: x["hr_mean"].round(1),
             power_mean=lambda x: x["power_mean"].round(1),
             power_std=lambda x: x["power_std"].round(1),
