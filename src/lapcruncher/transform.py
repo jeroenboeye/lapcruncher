@@ -26,6 +26,7 @@ def calculate_distance_km(df: pd.DataFrame) -> pd.Series:
 
 
 def enrich_pre_lap_data(df: pd.DataFrame) -> pd.DataFrame:
+    df = df.copy()
     df["distance_km"] = calculate_distance_km(df)
     df["power_4th_power"] = df.rolling(30).power.mean() ** 4
     df["power_above_1000W"] = df.power >= 1000
