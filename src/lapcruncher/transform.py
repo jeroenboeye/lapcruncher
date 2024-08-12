@@ -74,6 +74,7 @@ def enrich_laps(df: pd.DataFrame) -> pd.DataFrame:
                 "sum",
             ),
             seconds_power_below_800W_above_600W=("power_below_800W_above_600W", "sum"),
+            temperature=("temperature", "mean"),
         )
         .assign(
             duration=lambda x: x["time_end"] - x["time_start"],
@@ -85,6 +86,7 @@ def enrich_laps(df: pd.DataFrame) -> pd.DataFrame:
             speed_mean=lambda x: (
                 x["lap_distance_km"] / (x["duration"].dt.total_seconds() / 3600)
             ).round(1),
+            temperature=lambda x: x["temperature"].round(1),
         )
         .drop(
             columns=[
