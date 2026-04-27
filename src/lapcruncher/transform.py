@@ -37,9 +37,12 @@ def enrich_pre_lap_data(df: pd.DataFrame) -> pd.DataFrame:
 
 def detect_and_add_lap(df: pd.DataFrame, finish_coord: Coord) -> pd.DataFrame:
     df["distance_to_finish"] = df.apply(
-        lambda row: geodesic(
-            (row["latitude"], row["longitude"]), (finish_coord.lat, finish_coord.lon)
-        ).meters,
+        lambda row: (
+            geodesic(
+                (row["latitude"], row["longitude"]),
+                (finish_coord.lat, finish_coord.lon),
+            ).meters
+        ),
         axis=1,
     )
     df["delta_distance_to_finish"] = df["distance_to_finish"].diff()
@@ -57,7 +60,8 @@ def detect_and_add_lap(df: pd.DataFrame, finish_coord: Coord) -> pd.DataFrame:
 
 def enrich_laps(df: pd.DataFrame) -> pd.DataFrame:
     df = (
-        df.groupby("lap")
+        df.assign(date=lambda x: x["time"].dt.date)
+        .groupby(["date", "lap"])
         .agg(
             time_start=("time", "min"),
             time_end=("time", "max"),
@@ -83,7 +87,7 @@ def enrich_laps(df: pd.DataFrame) -> pd.DataFrame:
             hr_mean=lambda x: x["hr_mean"].round(1),
             power_mean=lambda x: x["power_mean"].round(1),
             power_std=lambda x: x["power_std"].round(1),
-            lap_distance_km=lambda x: (x["distance_km"] - x["distance_start_km"]),
+            lap_distance_km=lambda x: x["distance_km"] - x["distance_start_km"],
             speed_mean=lambda x: (
                 x["lap_distance_km"] / (x["duration"].dt.total_seconds() / 3600)
             ).round(1),
